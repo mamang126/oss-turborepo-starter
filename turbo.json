@@ -1,6 +1,9 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalDependencies": [
+    ".env"
+  ],
   "tasks": {
     "build": {
       "dependsOn": [
@@ -21,8 +24,38 @@
       ]
     },
     "start": {
+      "env": [
+        "DB_FILE_NAME"
+      ],
       "cache": false,
       "persistent": true
+    },
+    "push": {
+      "env": [
+        "DB_FILE_NAME"
+      ],
+      "inputs": [
+        "packages/data/**",
+        ".env*"
+      ]
+    },
+    "generate": {
+      "env": [
+        "DB_FILE_NAME"
+      ],
+      "inputs": [
+        "packages/data/**",
+        ".env*"
+      ]
+    },
+    "migrate": {
+      "env": [
+        "DB_FILE_NAME"
+      ],
+      "inputs": [
+        "packages/data/**",
+        ".env*"
+      ]
     }
   }
 }
