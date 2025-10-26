@@ -1,26 +1,20 @@
-import { eq } from "drizzle-orm";
-import { db } from "..";
-import { usersModel, usersTable } from "../schemas";
+import { usersTable } from "../schemas";
+import { ServiceParent } from "../parents/service.parent";
 
-export const userService = {
-  getUsers: () => {
-    return db.select().from(usersTable).all();
-  },
-  getUserById: (id: number) => {
-    return db.select().from(usersTable).where(eq(usersTable.id, id)).get();
-  },
-  createUser: (user: typeof usersModel.static) => {
-    return db.insert(usersTable).values(user).returning().get();
-  },
-  updateUser: (id: number, user: Partial<typeof usersModel.static>) => {
-    return db
-      .update(usersTable)
-      .set(user)
-      .where(eq(usersTable.id, id))
-      .returning()
-      .get();
-  },
-  deleteUser: (id: number) => {
-    return db.delete(usersTable).where(eq(usersTable.id, id)).returning().get();
-  },
-};
+export class UserService extends ServiceParent {
+  constructor() {
+    super(usersTable);
+  }
+
+  override async create(data: typeof usersTable.$inferInsert) {
+    data.password = await Bun.password.hash(data.password);
+    return super.create(data);
+  }
+
+  override async update(id: number, data: typeof usersTable.$inferInsert) {
+    if (data.password) {
+      data.password = await Bun.password.hash(data.password);
+    }
+    return super.update(id, data);
+  }
+}

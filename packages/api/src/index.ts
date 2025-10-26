@@ -1,4 +1,4 @@
-import { Elysia, ValidationError, ElysiaTypeCustomError } from "elysia";
+import { Elysia, ValidationError } from "elysia";
 import { userController } from "./controller/user.controller";
 import openapi from "@elysiajs/openapi";
 
@@ -25,7 +25,7 @@ const api = new Elysia({
       };
     }
     if (error.error instanceof Error) {
-      console.error(`[${error.error.name}]`, error.error.message);
+      console.error(`[${error.error.name}]`, error.error);
       return { message: error.error, name: error.error.name };
     }
     return { error: "An error occurred", detail: "Internal Server Error" };
