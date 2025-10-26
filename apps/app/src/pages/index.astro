@@ -1,11 +1,16 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { schemas } from "@repo/data";
+import {} from "@repo/api";
+import Layout from "../layouts/Layout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const users: { users: (typeof schemas.usersModel.static)[] } = await fetch(
+  new URL("/api/users", Astro.url)
+).then((res) => res.json());
 ---
 
 <Layout>
-	<Welcome />
+  <h1>Welcome to Astro!</h1>
+  <ul>
+    {users.users.map((user) => <li>{user.username}</li>)}
+  </ul>
 </Layout>

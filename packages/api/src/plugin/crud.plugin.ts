@@ -3,13 +3,11 @@ import Elysia, { t, type TSchema } from "elysia";
 
 export const crudPlugin = (
   service: ServiceParent,
-  model:
-    | TSchema
-    | {
-        create: TSchema;
-        edit?: TSchema;
-        get: TSchema;
-      },
+  model: {
+    create: TSchema;
+    edit?: TSchema;
+    get: TSchema;
+  },
   config: { prefix: string }
 ) =>
   new Elysia({

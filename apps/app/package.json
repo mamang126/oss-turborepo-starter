@@ -3,13 +3,14 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "start": "bun --bun run astro dev",
+    "start": "dotenv -e ../../.env -- bun --bun astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@repo/api": "workspace:*",
+    "@repo/data": "workspace:*",
     "astro": "^5.15.1"
   }
 }
