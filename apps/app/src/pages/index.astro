@@ -1,6 +1,20 @@
 ---
 import { schemas } from "@repo/data";
-import {} from "@repo/api";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
 import Layout from "../layouts/Layout.astro";
 
 const users: { users: (typeof schemas.usersModel.static)[] } = await fetch(
@@ -9,8 +23,34 @@ const users: { users: (typeof schemas.usersModel.static)[] } = await fetch(
 ---
 
 <Layout>
-  <h1>Welcome to Astro!</h1>
-  <ul>
-    {users.users.map((user) => <li>{user.username}</li>)}
-  </ul>
+  <div class="p-6">
+    <Card>
+      <CardHeader>
+        <CardTitle>UserList</CardTitle>
+        <CardDescription>A list of all users in the system.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Row</TableHead>
+              <TableHead className="w-[100px]">Id</TableHead>
+              <TableHead>Username</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {
+              users.users.map((user, index) => (
+                <TableRow key={user.id}>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
+                  <TableCell className="font-medium">{user.id}</TableCell>
+                  <TableCell className="font-medium">{user.username}</TableCell>
+                </TableRow>
+              ))
+            }
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  </div>
 </Layout>

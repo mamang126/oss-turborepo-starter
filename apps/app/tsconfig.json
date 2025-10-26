@@ -3,10 +3,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@repo/api": [
-        "../../packages/api/src/index.ts"
+      "@/*": [
+        "./src/*"
       ]
-    }
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
   "include": [
     ".astro/types.d.ts",
