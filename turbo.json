@@ -25,7 +25,9 @@
     },
     "start": {
       "env": [
-        "DB_FILE_NAME"
+        "DB_FILE_NAME",
+        "BETTER_AUTH_URL",
+        "BETTER_AUTH_SECRET"
       ],
       "cache": false,
       "persistent": true

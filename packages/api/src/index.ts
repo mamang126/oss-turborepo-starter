@@ -1,6 +1,8 @@
 import { Elysia, ValidationError } from "elysia";
 import { userController } from "./controller/user.controller";
 import openapi from "@elysiajs/openapi";
+import { auth, OpenAPI } from "@repo/data";
+import { authPlugin } from "./plugin/auth.plugin";
 
 const api = new Elysia({
   prefix: "/api",
@@ -14,6 +16,8 @@ const api = new Elysia({
           description: "API documentation for the Elysia application",
           version: "1.0.0",
         },
+        components: await OpenAPI.components,
+        paths: await OpenAPI.getPaths(),
       },
     })
   )
@@ -30,6 +34,8 @@ const api = new Elysia({
     }
     return { error: "An error occurred", detail: "Internal Server Error" };
   })
+  .mount(auth.handler)
+  .use(authPlugin)
   .use(userController);
 
 export { api };
